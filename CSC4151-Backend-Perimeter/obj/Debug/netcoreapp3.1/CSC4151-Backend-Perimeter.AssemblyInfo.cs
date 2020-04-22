@@ -11,6 +11,7 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("b172718e-7e2b-45a1-b1af-15d58c704994")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("CSC4151-Backend-Perimeter")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
