@@ -24,7 +24,6 @@ namespace CSC4151_Backend_Perimeter.Controllers
         [HttpGet]
         public string Ping()
         {
-            var req = Request;
             return "Pong";
         }
     }
