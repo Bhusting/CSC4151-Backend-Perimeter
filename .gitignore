@@ -8,7 +8,7 @@
 *.nuget*
 *.assets.*
 *.sln.docstates
-*.Rli.Runtime.Api.DESKTOP-4EPNO80-configuration.txt
+CSC4151-Backend-Perimeter\obj
 
 # Build results
 [Dd]ebug/
