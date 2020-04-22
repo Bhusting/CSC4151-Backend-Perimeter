@@ -4,6 +4,9 @@
 # User-specific files
 *.suo
 *.user
+*.cache
+*.nuget*
+*.assets.*
 *.sln.docstates
 *.Rli.Runtime.Api.DESKTOP-4EPNO80-configuration.txt
 
