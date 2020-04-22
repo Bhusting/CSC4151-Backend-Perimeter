@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -12,9 +13,11 @@ namespace EndToEndTests
         [Fact]
         public async Task PingTest()
         {
+            System.Net.ServicePointManager.SecurityProtocol =
+                SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             var token = await GraphClient.GetAccessToken();
 
-            var httpClient = new HttpClient() { BaseAddress = new Uri("https://localhost:44353") };
+            var httpClient = new HttpClient() { BaseAddress = new Uri("https://localhost:32776") };
 
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
