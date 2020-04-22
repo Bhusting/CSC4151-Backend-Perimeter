@@ -8,7 +8,7 @@
 *.nuget*
 *.assets.*
 *.sln.docstates
-CSC4151-Backend-Perimeter\obj
+CSC4151-Backend-Perimeter/obj
 
 # Build results
 [Dd]ebug/
