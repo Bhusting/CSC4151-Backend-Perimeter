@@ -851,6 +851,16 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlDocument.dll": {}
         }
+      },
+      "Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Domain.dll": {}
+        }
       }
     }
   },
@@ -3660,10 +3670,16 @@
         "system.xml.xmldocument.4.3.0.nupkg.sha512",
         "system.xml.xmldocument.nuspec"
       ]
+    },
+    "Domain/1.0.0": {
+      "type": "project",
+      "path": "../Domain/Domain.csproj",
+      "msbuildProject": "../Domain/Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "Domain >= 1.0.0",
       "Microsoft.AspNetCore.Authentication.AzureAD.UI >= 3.1.3",
       "Microsoft.VisualStudio.Azure.Containers.Tools.Targets >= 1.9.10"
     ]
@@ -3697,7 +3713,11 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\repos\\CSC4151-Backend-Perimeter\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\repos\\CSC4151-Backend-Perimeter\\Domain\\Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

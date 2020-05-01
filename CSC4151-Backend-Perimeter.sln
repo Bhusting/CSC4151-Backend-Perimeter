@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSC4151-Backend-Perimeter", "CSC4151-Backend-Perimeter\CSC4151-Backend-Perimeter.csproj", "{E208733B-04C2-4A97-916A-9619DE249588}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EndToEndTests", "EndToEndTests\EndToEndTests.csproj", "{DAB02BB4-B1E9-459A-B49C-DC45B0166904}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EndToEndTests", "EndToEndTests\EndToEndTests.csproj", "{DAB02BB4-B1E9-459A-B49C-DC45B0166904}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{2655DF70-F762-4AEE-BDA4-59CACD824EF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{DAB02BB4-B1E9-459A-B49C-DC45B0166904}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAB02BB4-B1E9-459A-B49C-DC45B0166904}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAB02BB4-B1E9-459A-B49C-DC45B0166904}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2655DF70-F762-4AEE-BDA4-59CACD824EF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2655DF70-F762-4AEE-BDA4-59CACD824EF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2655DF70-F762-4AEE-BDA4-59CACD824EF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2655DF70-F762-4AEE-BDA4-59CACD824EF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

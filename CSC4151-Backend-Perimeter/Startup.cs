@@ -28,6 +28,8 @@ namespace CSC4151_Backend_Perimeter
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options => Configuration.Bind("Auth0", options));
 
+            services.AddHttpClient();
+
             services.AddControllers();
 
             services.AddMvc()
