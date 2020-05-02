@@ -19,7 +19,7 @@ namespace CSC4151_Backend_Perimeter.Controllers
         public ProfileController(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri("http://52.149.194.40/Profile");
+            _httpClient.BaseAddress = new Uri("http://profileservice.azurewebsites.net/Profile");
         }
 
         [HttpGet("{id}")]
