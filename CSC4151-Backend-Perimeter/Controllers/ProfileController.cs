@@ -16,9 +16,9 @@ namespace CSC4151_Backend_Perimeter.Controllers
     public class ProfileController : ControllerBase
     {
         private readonly HttpClient _httpClient;
-        public ProfileController(HttpClient httpClient)
+        public ProfileController(IHttpClientFactory httpClient)
         {
-            _httpClient = httpClient;
+            _httpClient = httpClient.CreateClient();
             _httpClient.BaseAddress = new Uri("http://profileservice.azurewebsites.net/Profile");
         }
 
