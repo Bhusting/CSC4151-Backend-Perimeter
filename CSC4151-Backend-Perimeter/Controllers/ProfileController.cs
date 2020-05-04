@@ -22,13 +22,13 @@ namespace CSC4151_Backend_Perimeter.Controllers
         {
             _logger = logger;
             _httpClient = httpClient.CreateClient();
-            _httpClient.BaseAddress = new Uri("http://profileservice.azurewebsites.net/Profile");
         }
 
         [HttpGet("{id}")]
         public async Task<Profile> GetProfile(Guid id)
         {
-            var res = await _httpClient.GetAsync($"{id}");
+            _httpClient.BaseAddress = new Uri($"http://profileservice.azurewebsites.net/Profile/{id.ToString()}");
+            var res = await _httpClient.GetAsync("");
 
             _logger.LogInformation(res.StatusCode.ToString());
 
