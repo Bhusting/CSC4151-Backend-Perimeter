@@ -4,14 +4,16 @@ namespace Domain
 {
     public class Profile
     {
-        public Guid UserId { get; set; }
+        public Guid ProfileId { get; set; }
 
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
 
-        public string XP { get; set; }
+        public int XP { get; set; }
 
         public Guid HouseId { get; set; }
+
+        public string Email { get; set; }
     }
 }

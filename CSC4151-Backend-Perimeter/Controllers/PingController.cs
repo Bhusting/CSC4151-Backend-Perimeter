@@ -12,9 +12,11 @@ namespace CSC4151_Backend_Perimeter.Controllers
     [Authorize]
     public class PingController : ControllerBase
     {
-        public PingController()
-        {
+        private readonly IServiceProvider _provider;
 
+        public PingController(IServiceProvider provider)
+        {
+            _provider = provider;
         }
 
         /// <summary>
