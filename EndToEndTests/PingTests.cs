@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Auth0.OidcClient;
 using Domain;
 using Newtonsoft.Json;
 using Xunit;
@@ -19,9 +20,8 @@ namespace EndToEndTests
                 SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             var token = await GraphClient.GetAccessToken();
 
-
-            var httpClient = new HttpClient() { BaseAddress = new Uri("http://takappservices.azurewebsites.net") };
-            //var httpClient = new HttpClient() { BaseAddress = new Uri("https://localhost:44353") };
+            //var httpClient = new HttpClient() { BaseAddress = new Uri("http://takappservices.azurewebsites.net") };
+            var httpClient = new HttpClient() { BaseAddress = new Uri("http://localhost:5000") };
 
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 

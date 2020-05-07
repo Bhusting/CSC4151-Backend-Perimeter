@@ -14,7 +14,7 @@ namespace EndToEndTests
     public class ProfileTests
     {
         [Fact]
-        public async Task ProfileTest()
+        public async Task GetProfileTest()
         {
             System.Net.ServicePointManager.SecurityProtocol =
                 SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
@@ -25,7 +25,7 @@ namespace EndToEndTests
 
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            var res = await httpClient.GetAsync($"Profile/{Guid.Empty}");
+            var res = await httpClient.GetAsync($"Profile/7C646561-E5AA-45F6-BE80-BB76B1FB23B5");
 
             Assert.True(res.IsSuccessStatusCode);
 
@@ -33,5 +33,31 @@ namespace EndToEndTests
 
             Assert.True(profile.LastName == "Ruxin");
         }
+
+        [Fact]
+        public async Task CreateProfileTest()
+        {
+            System.Net.ServicePointManager.SecurityProtocol =
+                SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            var token = await GraphClient.GetAccessToken();
+
+            //var httpClient = new HttpClient() { BaseAddress = new Uri("http://takappservices.azurewebsites.net") };
+            var httpClient = new HttpClient() { BaseAddress = new Uri("https://localhost:44353") };
+
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+
+            var res = await httpClient.PostAsync($"Profile/Jenny/Macarthur", new StringContent(""));
+
+            Assert.True(res.StatusCode == HttpStatusCode.Accepted);
+
+            var profileId = await res.Content.ReadAsStringAsync();
+            
+            var getRes = await httpClient.GetAsync($"Profile/{JsonConvert.DeserializeObject<Guid>(profileId)}");
+            
+            Assert.True(res.IsSuccessStatusCode);
+
+            var profile = JsonConvert.DeserializeObject<Profile>(await getRes.Content.ReadAsStringAsync());
+;        }
     }
 }

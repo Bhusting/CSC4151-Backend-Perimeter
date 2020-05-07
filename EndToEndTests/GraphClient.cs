@@ -2,6 +2,9 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Auth0.OidcClient;
+using IdentityModel.OidcClient;
+using IdentityModel.OidcClient.Browser;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -21,7 +24,6 @@ namespace EndToEndTests
 
             return res.access_token;
         }
-
     }
 
     public class Auth0Res
