@@ -21,7 +21,7 @@ namespace EndToEndTests
             var token = await GraphClient.GetAccessToken();
 
             //var httpClient = new HttpClient() { BaseAddress = new Uri("http://takappservices.azurewebsites.net") };
-            var httpClient = new HttpClient() { BaseAddress = new Uri("http://localhost:5000") };
+            var httpClient = new HttpClient() { BaseAddress = new Uri("http://localhost:32768") };
 
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
