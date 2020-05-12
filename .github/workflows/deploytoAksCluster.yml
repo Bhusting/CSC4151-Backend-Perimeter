@@ -27,7 +27,7 @@ jobs:
     - name: Build and push image to ACR
       id: build-image
       run: |
-        docker build "$GITHUB_WORKSPACE" -f  "CSC4151-Backend-Perimeter/Dockerfile" -t takcontainers.azurecr.io/takcluster:${{ github.sha }}
+        docker build "$GITHUB_WORKSPACE" -f  "Dockerfile" -t takcontainers.azurecr.io/takcluster:${{ github.sha }}
         docker push takcontainers.azurecr.io/takcluster:${{ github.sha }}
     
     - uses: azure/k8s-set-context@v1
