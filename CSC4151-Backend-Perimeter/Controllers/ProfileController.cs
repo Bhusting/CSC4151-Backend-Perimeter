@@ -34,7 +34,7 @@ namespace CSC4151_Backend_Perimeter.Controllers
         [HttpGet("{id}")]
         public async Task<Profile> GetProfile(Guid id)
         {
-            _httpClient.BaseAddress = new Uri($"http://profileservice.azurewebsites.net/Profile/{id.ToString()}");
+            _httpClient.BaseAddress = new Uri($"https://takprofile.azurewebsites.net/Profile/{id.ToString()}");
             var res = await _httpClient.GetAsync("");
 
             _logger.LogInformation(res.StatusCode.ToString());
