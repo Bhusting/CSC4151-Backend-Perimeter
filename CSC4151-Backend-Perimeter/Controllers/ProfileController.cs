@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -89,8 +90,14 @@ namespace CSC4151_Backend_Perimeter.Controllers
             profile.LastName = lastName;
             profile.XP = 0;
 
+            string email;
+            using (StreamReader stream = new StreamReader(Request.Body))
+            { 
+                email= await stream.ReadToEndAsync();
+            }
+
             // TODO: Replace with User Email
-            profile.Email = "Test";
+            profile.Email = email;
 
             var command = new Message().CreateMessage("CreateProfile", profile);
 
