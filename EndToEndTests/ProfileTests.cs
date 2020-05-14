@@ -20,12 +20,14 @@ namespace EndToEndTests
                 SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             var token = await GraphClient.GetAccessToken();
 
-            var httpClient = new HttpClient() { BaseAddress = new Uri("http://takappservices.azurewebsites.net") };
-            //var httpClient = new HttpClient() { BaseAddress = new Uri("https://localhost:44353") };
+            var httpClient = new HttpClient() { BaseAddress = new Uri("https://takkapp.azurewebsites.net") };
+            //var httpClient = new HttpClient() { BaseAddress = new Uri("http://localhost:54381") };
 
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            var res = await httpClient.GetAsync($"Profile/7C646561-E5AA-45F6-BE80-BB76B1FB23B5");
+            var x = Guid.Empty.ToString();
+
+            var res = await httpClient.GetAsync($"Profile/{x}");
 
             Assert.True(res.IsSuccessStatusCode);
 
@@ -41,8 +43,8 @@ namespace EndToEndTests
                 SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             var token = await GraphClient.GetAccessToken();
 
-            //var httpClient = new HttpClient() { BaseAddress = new Uri("http://takappservices.azurewebsites.net") };
-            var httpClient = new HttpClient() { BaseAddress = new Uri("https://localhost:44353") };
+            var httpClient = new HttpClient() { BaseAddress = new Uri("https://takkapp.azurewebsites.net") };
+            //var httpClient = new HttpClient() { BaseAddress = new Uri("https://localhost:44353") };
 
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
