@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSC4151-Backend-Perimeter", "CSC4151-Backend-Perimeter\CSC4151-Backend-Perimeter.csproj", "{AFEDD669-8408-4BB9-8EB5-B197BD01D36E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSC4151-Backend-Perimeter", "CSC4151-Backend-Perimeter\CSC4151-Backend-Perimeter.csproj", "{AFEDD669-8408-4BB9-8EB5-B197BD01D36E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{259366C6-4920-4F28-85C8-DF340E329B47}"
 EndProject

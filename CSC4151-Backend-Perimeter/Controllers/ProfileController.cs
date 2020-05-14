@@ -43,6 +43,42 @@ namespace CSC4151_Backend_Perimeter.Controllers
 
             return profile;
         }
+        
+        /// <summary>
+        /// Retrieves a Users XP Value.
+        /// </summary>
+        /// <param name="id">Id of the profile to retrieve.</param>
+        /// <returns>XP value.</returns>
+        [HttpGet("{id}/XP")]
+        public async Task<int> GetXP(Guid id)
+        {
+            _httpClient.BaseAddress = new Uri($"https://takprofile.azurewebsites.net/Profile/{id.ToString()}/XP");
+            var res = await _httpClient.GetAsync("");
+
+            _logger.LogInformation(res.StatusCode.ToString());
+
+            var xp = JsonConvert.DeserializeObject<int>(await res.Content.ReadAsStringAsync());
+
+            return xp;
+        }
+
+        /// <summary>
+        /// Retrieves a User from Email
+        /// </summary>
+        /// <param name="email">Email of the User</param>
+        /// <returns>User Profile</returns>
+        [HttpGet("Email/{email}")]
+        public async Task<Profile> GetProfileByEmail(string email)
+        {
+            _httpClient.BaseAddress = new Uri($"https://takprofile.azurewebsites.net/Profile/Email/{email}");
+            var res = await _httpClient.GetAsync("");
+
+            _logger.LogInformation(res.StatusCode.ToString());
+
+            var profile = JsonConvert.DeserializeObject<Profile>(await res.Content.ReadAsStringAsync());
+
+            return profile;
+        }
 
         [HttpPost("{firstName}/{lastName}")]
         public async Task<ActionResult<Guid>> CreateProfile(string firstName, string lastName)
@@ -52,12 +88,23 @@ namespace CSC4151_Backend_Perimeter.Controllers
             profile.FirstName = firstName;
             profile.LastName = lastName;
             profile.XP = 0;
+
+            // TODO: Replace with User Email
             profile.Email = "Test";
 
             var command = new Message().CreateMessage("CreateProfile", profile);
 
             await _queueClient.Instance.SendAsync(command);
             return Accepted(profile.ProfileId);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task DeleteProfile(Guid id)
+        {
+
+            var command = new Message().CreateMessage("DeleteProfile", id);
+
+            await _queueClient.Instance.SendAsync(command);
         }
     }
 }
