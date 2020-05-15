@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 namespace CSC4151_Backend_Perimeter.Controllers
 {
     [ApiController]
-    [Route("Profile")]
+    [Route("Chore")]
     [Authorize]
     public class ChoreController : ControllerBase
     {
@@ -35,7 +35,7 @@ namespace CSC4151_Backend_Perimeter.Controllers
         [HttpGet("{id}")]
         public async Task<Chore> GetChore(Guid id)
         {
-            _httpClient.BaseAddress = new Uri($"https://takprofile.azurewebsites.net/Chore/{id.ToString()}");
+            _httpClient.BaseAddress = new Uri($"https://takchore.azurewebsites.net/Chore/{id.ToString()}");
             var res = await _httpClient.GetAsync("");
 
             _logger.LogInformation(res.StatusCode.ToString());
