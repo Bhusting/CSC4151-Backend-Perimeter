@@ -13,6 +13,9 @@ namespace EndToEndTests
 {
     public class ProfileTests
     {
+        //private readonly Uri _path = new Uri("https://takkapp.azurewebsites.net");
+        private readonly Uri _path = new Uri("http://localhost:54381");
+
         [Fact]
         public async Task GetProfileTest()
         {
@@ -20,8 +23,7 @@ namespace EndToEndTests
                 SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             var token = await GraphClient.GetAccessToken();
 
-            var httpClient = new HttpClient() { BaseAddress = new Uri("https://takkapp.azurewebsites.net") };
-            //var httpClient = new HttpClient() { BaseAddress = new Uri("http://localhost:54381") };
+            var httpClient = new HttpClient() { BaseAddress = _path };
 
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -37,19 +39,57 @@ namespace EndToEndTests
         }
 
         [Fact]
+        public async Task GetProfileEmailTest()
+        {
+            System.Net.ServicePointManager.SecurityProtocol =
+                SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            var token = await GraphClient.GetAccessToken();
+
+            var httpClient = new HttpClient() { BaseAddress = _path };
+
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var x = "theruxter18@hotmail";
+
+            var res = await httpClient.GetAsync($"Profile/Email/{x}");
+
+            Assert.True(res.IsSuccessStatusCode);
+
+            var profile = JsonConvert.DeserializeObject<Profile>(await res.Content.ReadAsStringAsync());
+
+            Assert.True(profile.LastName == "Ruxin");
+        }
+
+        [Fact]
+        public async Task GetHouseProfiles()
+        {
+            System.Net.ServicePointManager.SecurityProtocol =
+                SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            var token = await GraphClient.GetAccessToken();
+
+            var httpClient = new HttpClient() { BaseAddress = _path };
+
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var x = Guid.Empty;
+
+            var res = await httpClient.GetAsync($"Profile/House/{x}");
+
+            Assert.True(res.IsSuccessStatusCode);
+        }
+
+        [Fact]
         public async Task CreateProfileTest()
         {
             System.Net.ServicePointManager.SecurityProtocol =
                 SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             var token = await GraphClient.GetAccessToken();
 
-            var httpClient = new HttpClient() { BaseAddress = new Uri("https://takkapp.azurewebsites.net") };
-            //var httpClient = new HttpClient() { BaseAddress = new Uri("https://localhost:44353") };
+            var httpClient = new HttpClient() { BaseAddress = _path };
 
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-
-            var res = await httpClient.PostAsync($"Profile/Jenny/Macarthur", new StringContent(""));
+            var res = await httpClient.PostAsync($"Profile/Jenny/Macarthur", new StringContent("jmac@gmail.com"));
 
             Assert.True(res.StatusCode == HttpStatusCode.Accepted);
 

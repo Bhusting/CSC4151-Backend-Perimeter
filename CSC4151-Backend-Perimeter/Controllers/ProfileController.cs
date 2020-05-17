@@ -81,6 +81,19 @@ namespace CSC4151_Backend_Perimeter.Controllers
             return profile;
         }
 
+        [HttpGet("House/{houseId}")]
+        public async Task<List<Profile>> GetHouseProfiles(Guid houseId)
+        {
+            _httpClient.BaseAddress = new Uri($"https://takprofile.azurewebsites.net/Profile/House/{houseId}");
+            var res = await _httpClient.GetAsync("");
+
+            _logger.LogInformation(res.StatusCode.ToString());
+
+            var profiles = JsonConvert.DeserializeObject<List<Profile>>(await res.Content.ReadAsStringAsync());
+
+            return profiles;
+        }
+
         [HttpPost("{firstName}/{lastName}")]
         public async Task<ActionResult<Guid>> CreateProfile(string firstName, string lastName)
         {
@@ -96,7 +109,6 @@ namespace CSC4151_Backend_Perimeter.Controllers
                 email= await stream.ReadToEndAsync();
             }
 
-            // TODO: Replace with User Email
             profile.Email = email;
 
             var command = new Message().CreateMessage("CreateProfile", profile);

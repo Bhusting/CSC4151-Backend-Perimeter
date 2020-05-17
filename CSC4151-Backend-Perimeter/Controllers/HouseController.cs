@@ -58,7 +58,6 @@ namespace CSC4151_Backend_Perimeter.Controllers
         [HttpPost("{houseName}")]
         public async Task<ActionResult<Guid>> CreateHouse(string houseName)
         {
-
             var house = new House();
             house.HouseId = Guid.NewGuid();
             house.HouseName = houseName;
@@ -73,7 +72,6 @@ namespace CSC4151_Backend_Perimeter.Controllers
         [HttpDelete("{id}")]
         public async Task DeleteHouse(Guid id)
         {
-
             var command = new Message().CreateMessage("DeleteHouse", id);
 
             await _queueClient.Instance.SendAsync(command);
