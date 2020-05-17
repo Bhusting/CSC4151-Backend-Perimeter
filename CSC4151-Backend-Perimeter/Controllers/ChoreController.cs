@@ -54,7 +54,7 @@ namespace CSC4151_Backend_Perimeter.Controllers
         [HttpGet("HouseId/{houseId}")]
         public async Task<IEnumerable<Chore>>GetChoresByHouseId(string houseId)
         {
-            _httpClient.BaseAddress = new Uri($"https://takprofile.azurewebsites.net/Chore/HouseId/{houseId}");
+            _httpClient.BaseAddress = new Uri($"https://takchore.azurewebsites.net/Chore/HouseId/{houseId}");
             var res = await _httpClient.GetAsync("");
 
             _logger.LogInformation(res.StatusCode.ToString());
@@ -72,7 +72,7 @@ namespace CSC4151_Backend_Perimeter.Controllers
         [HttpGet("ChoreTypeId/{choretypeId}")]
         public async Task<IEnumerable<Chore>> GetChoresByChoreTypeId(short choretypeId)
         {
-            _httpClient.BaseAddress = new Uri($"https://takprofile.azurewebsites.net/Chore/ChoreTypeId/{choretypeId}");
+            _httpClient.BaseAddress = new Uri($"https://takchore.azurewebsites.net/Chore/ChoreTypeId/{choretypeId}");
             var res = await _httpClient.GetAsync("");
 
             _logger.LogInformation(res.StatusCode.ToString());
@@ -85,7 +85,10 @@ namespace CSC4151_Backend_Perimeter.Controllers
         [HttpPost]
         public async Task<string> CreateChore([FromBody] Chore chore)
         {
-            _httpClient.BaseAddress = new Uri($"https://takprofile.azurewebsites.net/Chore");
+            _httpClient.BaseAddress = new Uri($"https://takchore.azurewebsites.net/Chore");
+
+            chore.ChoreId = Guid.NewGuid();
+
             var json = JsonConvert.SerializeObject(chore);
             var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
             var res = await _httpClient.PostAsync($"Chore", stringContent);
