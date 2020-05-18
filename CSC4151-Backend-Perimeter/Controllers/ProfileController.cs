@@ -50,10 +50,10 @@ namespace CSC4151_Backend_Perimeter.Controllers
         /// </summary>
         /// <param name="id">Id of the profile to retrieve.</param>
         /// <returns>XP value.</returns>
-        [HttpGet("{id}/XP")]
-        public async Task<int> GetXP(Guid id)
+        [HttpGet("{profileId}/XP")]
+        public async Task<int> GetXP(Guid profileId)
         {
-            _httpClient.BaseAddress = new Uri($"https://takprofile.azurewebsites.net/Profile/{id.ToString()}/XP");
+            _httpClient.BaseAddress = new Uri($"https://takprofile.azurewebsites.net/Profile/{profileId.ToString()}/XP");
             var res = await _httpClient.GetAsync("");
 
             _logger.LogInformation(res.StatusCode.ToString());
@@ -117,10 +117,25 @@ namespace CSC4151_Backend_Perimeter.Controllers
             return Accepted(profile.ProfileId);
         }
 
+        [HttpPost("{profileId}/House/{houseId}")]
+        public async Task UpdateHouse(Guid profileId, Guid houseId)
+        {
+            var command = new Message().CreateMessage("UpdateHouse", new KeyValuePair<Guid, Guid>(profileId, houseId));
+
+            await _queueClient.Instance.SendAsync(command);
+        }
+
+        [HttpPost("{profileId}/XP")]
+        public async Task AddXP(Guid profileId)
+        {
+            var command = new Message().CreateMessage("AddXP", profileId);
+
+            await _queueClient.Instance.SendAsync(command);
+        }
+
         [HttpDelete("{id}")]
         public async Task DeleteProfile(Guid id)
         {
-
             var command = new Message().CreateMessage("DeleteProfile", id);
 
             await _queueClient.Instance.SendAsync(command);

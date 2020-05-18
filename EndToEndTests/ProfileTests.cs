@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Domain;
 using Newtonsoft.Json;
@@ -95,11 +96,53 @@ namespace EndToEndTests
 
             var profileId = await res.Content.ReadAsStringAsync();
             
+            Thread.Sleep(1000);
+
             var getRes = await httpClient.GetAsync($"Profile/{JsonConvert.DeserializeObject<Guid>(profileId)}");
             
-            Assert.True(res.IsSuccessStatusCode);
+            Assert.True(getRes.IsSuccessStatusCode);
 
             var profile = JsonConvert.DeserializeObject<Profile>(await getRes.Content.ReadAsStringAsync());
-;        }
+
+            var deleteRes = await httpClient.DeleteAsync($"Profile/{profile.ProfileId}");
+
+            Assert.True(deleteRes.IsSuccessStatusCode);
+        }
+
+        [Fact]
+        public async Task UpdateProfileHouse()
+        {
+            System.Net.ServicePointManager.SecurityProtocol =
+                SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            var token = await GraphClient.GetAccessToken();
+
+            var httpClient = new HttpClient() { BaseAddress = _path };
+
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var str = $"Profile/{Guid.Empty}/House/{Guid.Empty}";
+
+            var res = await httpClient.PostAsync(str, new StringContent(""));
+
+            Assert.True(res.IsSuccessStatusCode);
+        }
+
+        [Fact]
+        public async Task AddXP()
+        {
+            System.Net.ServicePointManager.SecurityProtocol =
+                SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            var token = await GraphClient.GetAccessToken();
+
+            var httpClient = new HttpClient() { BaseAddress = _path };
+
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var str = $"Profile/{Guid.Empty}/XP";
+
+            var res = await httpClient.PostAsync(str, new StringContent(""));
+
+            Assert.True(res.IsSuccessStatusCode);
+        }
     }
 }
