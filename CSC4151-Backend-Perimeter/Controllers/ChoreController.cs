@@ -51,10 +51,10 @@ namespace CSC4151_Backend_Perimeter.Controllers
         /// </summary>
         /// <param name="houseId">HouseId of the Chore</param>
         /// <returns>List of Chores</returns>
-        [HttpGet("HouseId/{houseId}")]
+        [HttpGet("House/{houseId}")]
         public async Task<IEnumerable<Chore>>GetChoresByHouseId(string houseId)
         {
-            _httpClient.BaseAddress = new Uri($"https://takchore.azurewebsites.net/Chore/HouseId/{houseId}");
+            _httpClient.BaseAddress = new Uri($"https://takchore.azurewebsites.net/Chore/House/{houseId}");
             var res = await _httpClient.GetAsync("");
 
             _logger.LogInformation(res.StatusCode.ToString());
@@ -69,10 +69,10 @@ namespace CSC4151_Backend_Perimeter.Controllers
         /// </summary>
         /// <param name="choretypeId">ChoreTypeId of the Chore</param>
         /// <returns>List of Chores</returns>
-        [HttpGet("ChoreTypeId/{choretypeId}")]
-        public async Task<IEnumerable<Chore>> GetChoresByChoreTypeId(short choretypeId)
+        [HttpGet("ChoreType/{choreTypeId}")]
+        public async Task<IEnumerable<Chore>> GetChoresByChoreTypeId(short choreTypeId)
         {
-            _httpClient.BaseAddress = new Uri($"https://takchore.azurewebsites.net/Chore/ChoreTypeId/{choretypeId}");
+            _httpClient.BaseAddress = new Uri($"https://takchore.azurewebsites.net/Chore/ChoreType/{choreTypeId}");
             var res = await _httpClient.GetAsync("");
 
             _logger.LogInformation(res.StatusCode.ToString());
@@ -83,21 +83,16 @@ namespace CSC4151_Backend_Perimeter.Controllers
         }
         
         [HttpPost]
-        public async Task<string> CreateChore([FromBody] Chore chore)
+        public async Task<ActionResult<Guid>> CreateChore([FromBody] Chore chore)
         {
-            _httpClient.BaseAddress = new Uri($"https://takchore.azurewebsites.net/Chore");
 
             chore.ChoreId = Guid.NewGuid();
+            
+            var command = new Message().CreateMessage("CreateChore", chore);
 
-            var json = JsonConvert.SerializeObject(chore);
-            var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
-            var res = await _httpClient.PostAsync($"Chore", stringContent);
+            await _queueClient.Instance.SendAsync(command);
 
-            _logger.LogInformation(res.StatusCode.ToString());
-
-            var body = await res.Content.ReadAsStringAsync();
-            return body;
-
+            return Accepted(chore.ChoreId);
         }
 
         [HttpDelete("{id}")]
