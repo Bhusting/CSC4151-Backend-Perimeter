@@ -41,7 +41,7 @@ namespace CSC4151_Backend_Perimeter
 #if DEBUG
             taskEnpoint = $"Tak.TaskService.{Environment.MachineName}";
 #else
-            taskEnpoint = "Tak.ProfileService";
+            taskEnpoint = "Tak.TaskService";
 #endif
 
             string choreEndpoint;
