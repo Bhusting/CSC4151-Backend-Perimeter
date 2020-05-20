@@ -6,7 +6,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Domain;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -34,7 +33,7 @@ namespace EndToEndTests
 
             Assert.True(res.IsSuccessStatusCode);
 
-            var profile = JsonConvert.DeserializeObject<Profile>(await res.Content.ReadAsStringAsync());
+            var profile = JsonConvert.DeserializeObject<Domain.Profile>(await res.Content.ReadAsStringAsync());
 
             Assert.True(profile.LastName == "Ruxin");
         }
@@ -56,7 +55,7 @@ namespace EndToEndTests
 
             Assert.True(res.IsSuccessStatusCode);
 
-            var profile = JsonConvert.DeserializeObject<Profile>(await res.Content.ReadAsStringAsync());
+            var profile = JsonConvert.DeserializeObject<Domain.Profile>(await res.Content.ReadAsStringAsync());
 
             Assert.True(profile.LastName == "Ruxin");
         }
@@ -102,7 +101,7 @@ namespace EndToEndTests
             
             Assert.True(getRes.IsSuccessStatusCode);
 
-            var profile = JsonConvert.DeserializeObject<Profile>(await getRes.Content.ReadAsStringAsync());
+            var profile = JsonConvert.DeserializeObject<Domain.Profile>(await getRes.Content.ReadAsStringAsync());
 
             var deleteRes = await httpClient.DeleteAsync($"Profile/{profile.ProfileId}");
 

@@ -22,9 +22,9 @@ namespace CSC4151_Backend_Perimeter.Controllers
     {
         private readonly ILogger<TaskController> _logger;
         private readonly HttpClient _httpClient;
-        private readonly IChoreQueueClient _queueClient;
+        private readonly ITaskQueueClient _queueClient;
 
-        public TaskController(ILogger<TaskController> logger, IHttpClientFactory httpClient, IChoreQueueClient queueClient)
+        public TaskController(ILogger<TaskController> logger, IHttpClientFactory httpClient, ITaskQueueClient queueClient)
         {
             _logger = logger;
             _httpClient = httpClient.CreateClient();

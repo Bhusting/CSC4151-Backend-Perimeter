@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using Domain;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -31,7 +30,7 @@ namespace EndToEndTests
 
             Assert.True(res.IsSuccessStatusCode);
 
-            var house = JsonConvert.DeserializeObject<House>(await res.Content.ReadAsStringAsync());
+            var house = JsonConvert.DeserializeObject<Domain.House>(await res.Content.ReadAsStringAsync());
 
             Assert.True(house.HouseId == Guid.Empty);
         }

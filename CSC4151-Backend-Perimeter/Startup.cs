@@ -37,9 +37,23 @@ namespace CSC4151_Backend_Perimeter
             endpointName = "Tak.ProfileService";
 #endif
 
-            services.AddSingleton <ITaskQueueClient>(new APIiQueueClient(Configuration["ServiceBus"], endpointName));
+            string taskEnpoint;
+#if DEBUG
+            taskEnpoint = $"Tak.TaskService.{Environment.MachineName}";
+#else
+            taskEnpoint = "Tak.ProfileService";
+#endif
+
+            string choreEndpoint;
+#if DEBUG
+            choreEndpoint = $"Tak.ChoreService.{Environment.MachineName}";
+#else
+            choreEndpoint = "Tak.ChoreService";
+#endif
+
+            services.AddSingleton <ITaskQueueClient>(new APIiQueueClient(Configuration["ServiceBus"], taskEnpoint));
             services.AddSingleton<IChoreQueueClient>(new APIiQueueClient(Configuration["ServiceBus"], endpointName));
-            services.AddSingleton<IProfileQueueClient>(new APIiQueueClient(Configuration["ServiceBus"], endpointName));
+            services.AddSingleton<IProfileQueueClient>(new APIiQueueClient(Configuration["ServiceBus"], choreEndpoint));
 
             services.AddHttpClient();
 
