@@ -14,8 +14,8 @@ namespace EndToEndTests
 {
     public class ProfileTests
     {
-        //private readonly Uri _path = new Uri("https://takkapp.azurewebsites.net");
-        private readonly Uri _path = new Uri("http://localhost:54381");
+        private readonly Uri _path = new Uri("https://takkapp.azurewebsites.net");
+        //private readonly Uri _path = new Uri("http://localhost:54381");
 
         [Fact]
         public async Task GetProfileTest()

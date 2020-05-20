@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using CSC4151_Backend_Perimeter.Messaging;
 using CSC4151_Backend_Perimeter.Queues;
-using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.ServiceBus;
@@ -33,14 +32,14 @@ namespace CSC4151_Backend_Perimeter.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<Chore> GetChore(Guid id)
+        public async Task<Domain.Chore> GetChore(Guid id)
         {
             _httpClient.BaseAddress = new Uri($"https://takchore.azurewebsites.net/Chore/{id.ToString()}");
             var res = await _httpClient.GetAsync("");
 
             _logger.LogInformation(res.StatusCode.ToString());
 
-            var chore = JsonConvert.DeserializeObject<Chore>(await res.Content.ReadAsStringAsync());
+            var chore = JsonConvert.DeserializeObject<Domain.Chore>(await res.Content.ReadAsStringAsync());
 
             return chore;
         }
@@ -52,14 +51,14 @@ namespace CSC4151_Backend_Perimeter.Controllers
         /// <param name="houseId">HouseId of the Chore</param>
         /// <returns>List of Chores</returns>
         [HttpGet("House/{houseId}")]
-        public async Task<IEnumerable<Chore>>GetChoresByHouseId(string houseId)
+        public async Task<IEnumerable<Domain.Chore>>GetChoresByHouseId(string houseId)
         {
             _httpClient.BaseAddress = new Uri($"https://takchore.azurewebsites.net/Chore/House/{houseId}");
             var res = await _httpClient.GetAsync("");
 
             _logger.LogInformation(res.StatusCode.ToString());
 
-            var chores = JsonConvert.DeserializeObject<IEnumerable<Chore>>(await res.Content.ReadAsStringAsync());
+            var chores = JsonConvert.DeserializeObject<IEnumerable<Domain.Chore>>(await res.Content.ReadAsStringAsync());
 
             return chores;
         }
@@ -70,22 +69,21 @@ namespace CSC4151_Backend_Perimeter.Controllers
         /// <param name="choretypeId">ChoreTypeId of the Chore</param>
         /// <returns>List of Chores</returns>
         [HttpGet("ChoreType/{choreTypeId}")]
-        public async Task<IEnumerable<Chore>> GetChoresByChoreTypeId(short choreTypeId)
+        public async Task<IEnumerable<Domain.Chore>> GetChoresByChoreTypeId(short choreTypeId)
         {
             _httpClient.BaseAddress = new Uri($"https://takchore.azurewebsites.net/Chore/ChoreType/{choreTypeId}");
             var res = await _httpClient.GetAsync("");
 
             _logger.LogInformation(res.StatusCode.ToString());
 
-            var chores = JsonConvert.DeserializeObject<IEnumerable<Chore>>(await res.Content.ReadAsStringAsync());
+            var chores = JsonConvert.DeserializeObject<IEnumerable<Domain.Chore>>(await res.Content.ReadAsStringAsync());
 
             return chores;
         }
         
         [HttpPost]
-        public async Task<ActionResult<Guid>> CreateChore([FromBody] Chore chore)
+        public async Task<ActionResult<Guid>> CreateChore([FromBody] Domain.Chore chore)
         {
-
             chore.ChoreId = Guid.NewGuid();
             
             var command = new Message().CreateMessage("CreateChore", chore);

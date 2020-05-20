@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using CSC4151_Backend_Perimeter.Messaging;
 using CSC4151_Backend_Perimeter.Queues;
-using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Logging;
@@ -30,27 +29,27 @@ namespace CSC4151_Backend_Perimeter.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<House> GetHouse(Guid id)
+        public async Task<Domain.House> GetHouse(Guid id)
         {
             _httpClient.BaseAddress = new Uri($"https://takprofile.azurewebsites.net/House/{id.ToString()}");
             var res = await _httpClient.GetAsync("");
 
             _logger.LogInformation(res.StatusCode.ToString());
 
-            var house = JsonConvert.DeserializeObject<House>(await res.Content.ReadAsStringAsync());
+            var house = JsonConvert.DeserializeObject<Domain.House>(await res.Content.ReadAsStringAsync());
 
             return house;
         }
 
         [HttpGet("Profile/{id}")]
-        public async Task<House> GetHouseByProfile(Guid id)
+        public async Task<Domain.House> GetHouseByProfile(Guid id)
         {
             _httpClient.BaseAddress = new Uri($"https://takprofile.azurewebsites.net/House/Profile/{id.ToString()}");
             var res = await _httpClient.GetAsync("");
 
             _logger.LogInformation(res.StatusCode.ToString());
 
-            var house = JsonConvert.DeserializeObject<House>(await res.Content.ReadAsStringAsync());
+            var house = JsonConvert.DeserializeObject<Domain.House>(await res.Content.ReadAsStringAsync());
 
             return house;
         }
@@ -58,7 +57,7 @@ namespace CSC4151_Backend_Perimeter.Controllers
         [HttpPost("{houseName}")]
         public async Task<ActionResult<Guid>> CreateHouse(string houseName)
         {
-            var house = new House();
+            var house = new Domain.House();
             house.HouseId = Guid.NewGuid();
             house.HouseName = houseName;
             house.Channel = Guid.NewGuid();

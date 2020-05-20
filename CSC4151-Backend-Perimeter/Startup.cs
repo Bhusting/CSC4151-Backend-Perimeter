@@ -37,6 +37,8 @@ namespace CSC4151_Backend_Perimeter
             endpointName = "Tak.ProfileService";
 #endif
 
+            services.AddSingleton <ITaskQueueClient>(new APIiQueueClient(Configuration["ServiceBus"], endpointName));
+            services.AddSingleton<IChoreQueueClient>(new APIiQueueClient(Configuration["ServiceBus"], endpointName));
             services.AddSingleton<IProfileQueueClient>(new APIiQueueClient(Configuration["ServiceBus"], endpointName));
 
             services.AddHttpClient();

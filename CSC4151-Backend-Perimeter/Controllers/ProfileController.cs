@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using CSC4151_Backend_Perimeter.Messaging;
 using CSC4151_Backend_Perimeter.Queues;
-using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.ServiceBus;
@@ -33,14 +32,14 @@ namespace CSC4151_Backend_Perimeter.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<Profile> GetProfile(Guid id)
+        public async Task<Domain.Profile> GetProfile(Guid id)
         {
             _httpClient.BaseAddress = new Uri($"https://takprofile.azurewebsites.net/Profile/{id.ToString()}");
             var res = await _httpClient.GetAsync("");
 
             _logger.LogInformation(res.StatusCode.ToString());
 
-            var profile = JsonConvert.DeserializeObject<Profile>(await res.Content.ReadAsStringAsync());
+            var profile = JsonConvert.DeserializeObject<Domain.Profile>(await res.Content.ReadAsStringAsync());
 
             return profile;
         }
@@ -69,27 +68,27 @@ namespace CSC4151_Backend_Perimeter.Controllers
         /// <param name="email">Email of the User</param>
         /// <returns>User Profile</returns>
         [HttpGet("Email/{email}")]
-        public async Task<Profile> GetProfileByEmail(string email)
+        public async Task<Domain.Profile> GetProfileByEmail(string email)
         {
             _httpClient.BaseAddress = new Uri($"https://takprofile.azurewebsites.net/Profile/Email/{email}");
             var res = await _httpClient.GetAsync("");
 
             _logger.LogInformation(res.StatusCode.ToString());
 
-            var profile = JsonConvert.DeserializeObject<Profile>(await res.Content.ReadAsStringAsync());
+            var profile = JsonConvert.DeserializeObject<Domain.Profile>(await res.Content.ReadAsStringAsync());
 
             return profile;
         }
 
         [HttpGet("House/{houseId}")]
-        public async Task<List<Profile>> GetHouseProfiles(Guid houseId)
+        public async Task<List<Domain.Profile>> GetHouseProfiles(Guid houseId)
         {
             _httpClient.BaseAddress = new Uri($"https://takprofile.azurewebsites.net/Profile/House/{houseId}");
             var res = await _httpClient.GetAsync("");
 
             _logger.LogInformation(res.StatusCode.ToString());
 
-            var profiles = JsonConvert.DeserializeObject<List<Profile>>(await res.Content.ReadAsStringAsync());
+            var profiles = JsonConvert.DeserializeObject<List<Domain.Profile>>(await res.Content.ReadAsStringAsync());
 
             return profiles;
         }
@@ -97,7 +96,7 @@ namespace CSC4151_Backend_Perimeter.Controllers
         [HttpPost("{firstName}/{lastName}")]
         public async Task<ActionResult<Guid>> CreateProfile(string firstName, string lastName)
         {
-            var profile = new Profile();
+            var profile = new Domain.Profile();
             profile.ProfileId = Guid.NewGuid();
             profile.FirstName = firstName;
             profile.LastName = lastName;
