@@ -67,10 +67,13 @@ namespace CSC4151_Backend_Perimeter.Controllers
         /// </summary>
         /// <param name="email">Email of the User</param>
         /// <returns>User Profile</returns>
-        [HttpGet("Email/{email}")]
-        public async Task<Domain.Profile> GetProfileByEmail(string email)
+        [HttpGet("Email")]
+        public async Task<Domain.Profile> GetProfileByEmail()
         {
-            _httpClient.BaseAddress = new Uri($"https://takprofile.azurewebsites.net/Profile/Email/{email}");
+            Request.Headers.TryGetValue("Email", out var email);
+            _httpClient.BaseAddress = new Uri($"https://takprofile.azurewebsites.net/Profile/Email");
+            
+            _httpClient.DefaultRequestHeaders.Add("Email", email.AsEnumerable());
             var res = await _httpClient.GetAsync("");
 
             _logger.LogInformation(res.StatusCode.ToString());
