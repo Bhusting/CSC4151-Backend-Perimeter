@@ -44,7 +44,6 @@ namespace CSC4151_Backend_Perimeter.Controllers
             return chore;
         }
                 
-
         /// <summary>
         /// Retrieves a Chore from HouseId
         /// </summary>
@@ -54,6 +53,24 @@ namespace CSC4151_Backend_Perimeter.Controllers
         public async Task<IEnumerable<Domain.Chore>>GetChoresByHouseId(string houseId)
         {
             _httpClient.BaseAddress = new Uri($"https://takchore.azurewebsites.net/Chore/House/{houseId}");
+            var res = await _httpClient.GetAsync("");
+
+            _logger.LogInformation(res.StatusCode.ToString());
+
+            var chores = JsonConvert.DeserializeObject<IEnumerable<Domain.Chore>>(await res.Content.ReadAsStringAsync());
+
+            return chores;
+        }
+
+        /// <summary>
+        /// Retrieves a Chore from HouseId
+        /// </summary>
+        /// <param name="houseId">HouseId of the Chore</param>
+        /// <returns>List of Chores</returns>
+        [HttpGet("House/{houseId}/Today")]
+        public async Task<IEnumerable<Domain.Chore>> GetChoresByHouseIdToday(string houseId)
+        {
+            _httpClient.BaseAddress = new Uri($"https://takchore.azurewebsites.net/Chore/House/{houseId}/Today");
             var res = await _httpClient.GetAsync("");
 
             _logger.LogInformation(res.StatusCode.ToString());
@@ -91,6 +108,16 @@ namespace CSC4151_Backend_Perimeter.Controllers
             await _queueClient.Instance.SendAsync(command);
 
             return Accepted(chore.ChoreId);
+        }
+
+        [HttpPost("{choreId}")]
+        public async Task<IActionResult> CompleteChore(Guid choreId)
+        {
+            var command = new Message().CreateMessage("CompleteChore", choreId);
+
+            await _queueClient.Instance.SendAsync(command);
+            
+            return Accepted(choreId);
         }
 
         [HttpDelete("{id}")]
