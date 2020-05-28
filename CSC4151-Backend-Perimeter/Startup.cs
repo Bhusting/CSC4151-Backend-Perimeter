@@ -52,8 +52,8 @@ namespace CSC4151_Backend_Perimeter
 #endif
 
             services.AddSingleton <ITaskQueueClient>(new APIiQueueClient(Configuration["ServiceBus"], taskEnpoint));
-            services.AddSingleton<IChoreQueueClient>(new APIiQueueClient(Configuration["ServiceBus"], endpointName));
-            services.AddSingleton<IProfileQueueClient>(new APIiQueueClient(Configuration["ServiceBus"], choreEndpoint));
+            services.AddSingleton<IChoreQueueClient>(new APIiQueueClient(Configuration["ServiceBus"], choreEndpoint));
+            services.AddSingleton<IProfileQueueClient>(new APIiQueueClient(Configuration["ServiceBus"], endpointName));
 
             services.AddHttpClient();
 
